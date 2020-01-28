@@ -1,4 +1,4 @@
-from .printJob import PrintJob
+from print_job import PrintJob
 
 
 def handle_print_job(print_job: PrintJob):
