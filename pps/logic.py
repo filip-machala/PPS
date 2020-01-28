@@ -1,7 +1,7 @@
-from . import Print_job
+from .printJob import PrintJob
 
 
-def handle_print_job(print_job: Print_job ):
+def handle_print_job(print_job: PrintJob):
     file = open("/var/spool/samba/handle_job.txt", "w")
     file.write(print_job.file)
     file.write(print_job.ip)
