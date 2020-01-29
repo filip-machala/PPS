@@ -17,7 +17,7 @@ def main():
     print_job = PrintJob(file, ip, date, path)
     job = q.enqueue(handle_print_job, args=[print_job])
     logger = Logger()
-    logger.write_to_file(print_job)
+    logger.log(print_job.time + " " + print_job.printer + " " + print_job.ip + " " + print_job.file)
 
 
 
