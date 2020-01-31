@@ -1,25 +1,28 @@
-2020-01-30 12:57:23,949 - simple_example - DEBUG - debug message
+2020-01-30 12:57:23,949 - root - ERROR - ERROR
 2020-01-30 12:57:23,949 - simple_example - INFO - info message
 2020-01-30 12:57:23,950 - simple_example - WARNING - warn message
 2020-01-30 12:57:23,950 - simple_example - ERROR - error message
 2020-01-30 12:57:23,950 - simple_example - CRITICAL - critical message
-2020-01-30 12:58:44,603 - PPS - INFO - filip_printer smbprn.uH3cxO 5.5.5.5 filip 2020/01/28 10:09:24
-2020-01-30 13:43:18,104 - simple_example - DEBUG - debug message
+2020-01-30 12:57:57,294 - root - INFO - INFO
+2020-01-30 12:57:57,294 - root - ERROR - ERROR
+2020-01-30 13:43:18,104 - root - ERROR - ERROR
 2020-01-30 13:43:18,105 - simple_example - INFO - info message
 2020-01-30 13:43:18,105 - simple_example - WARNING - warn message
 2020-01-30 13:43:18,105 - simple_example - ERROR - error message
 2020-01-30 13:43:18,105 - simple_example - CRITICAL - critical message
-2020-01-30 13:44:16,016 - simple_example - DEBUG - debug message
+2020-01-30 13:44:16,016 - root - ERROR - ERROR
 2020-01-30 13:44:16,016 - simple_example - INFO - info message
 2020-01-30 13:44:16,016 - simple_example - WARNING - warn message
 2020-01-30 13:44:16,016 - simple_example - ERROR - error message
 2020-01-30 13:44:16,017 - simple_example - CRITICAL - critical message
-2020-01-30 13:49:47,734 - simple_example - DEBUG - "Test Page"
+2020-01-30 13:49:25,152 - root - ERROR - ERROR
+2020-01-30 13:49:34,928 - root - ERROR - ERROR
+2020-01-30 13:49:47,733 - root - ERROR - ERROR
 2020-01-30 13:49:47,734 - simple_example - INFO - info message
 2020-01-30 13:49:47,734 - simple_example - WARNING - warn message
 2020-01-30 13:49:47,734 - simple_example - ERROR - error message
 2020-01-30 13:49:47,734 - simple_example - CRITICAL - critical message
-2020-01-30 13:50:16,005 - simple_example - DEBUG - "Test Page"
+2020-01-30 13:50:16,005 - root - ERROR - ERROR
 2020-01-30 13:50:16,005 - simple_example - INFO - info message
 2020-01-30 13:50:16,005 - simple_example - WARNING - warn message
 2020-01-30 13:50:16,005 - simple_example - ERROR - error message
