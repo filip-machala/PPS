@@ -1,14 +1,17 @@
-#This should be done
+Get ip address
 
-## Functional site
-#### Create functional redis queuing system for incoming print tasks with ability to forward them to real printer
-#### Get these details from print job:  printer, client, format, number of pages and if it is colour or grayscale print.
-#### Implement hold on function, so jobs will be queued until some signal came.
-#### Log all data that has been sent to printer. Log should have as much info as possible.
+Send to real printer
 
-# Search for authorization and how to implement it
+Make good looking front end
 
-## Graphics site
-### Implement GUI that has all functionality: show all information and has acceptance ability
+Add licenses
+
+Create config
+
+Add some authorization
+
+Finish logging to good state
+
+Manage deleting files after
 
 
