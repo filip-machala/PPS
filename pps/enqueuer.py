@@ -1,11 +1,9 @@
 #!/bin/env python3
 from redis import Redis
 from rq import Queue
-# from print_job import PrintJob
-from logic import handle_print_job
+from .logic import handle_print_job
+from .logger import Logger
 import sys
-from pps import logger
-import time
 from getpass import getuser
 import logging
 import logging.handlers
@@ -16,51 +14,50 @@ import subprocess
 
 def main():
     # TODO check arguments exists
+    my_logger = Logger()
     file = sys.argv[1]
     ip = sys.argv[2]
     printer = sys.argv[3]
     date = sys.argv[4]
-    print(file)
-    # current_time = time.strftime("%H:%M:%S", time.localtime())
     username = getuser()
     file_path = '/var/spool/samba/'
     full_file_path = file_path + file
 
     # Get print job name as set from client
-    print_job = get_file_name(full_file_path)
+    print_job = get_file_name(full_file_path, my_logger)
 
     # Get page paper_format
-    paper_format = get_file_format(file_path, file)
+    # paper_format = get_file_format(file_path, file)
 
-    # Log incoming job
-    format_to_use = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logger = logging.getLogger()
-    fh = logging.handlers.RotatingFileHandler('/var/spool/samba/test84.log', maxBytes=10240, backupCount=5)
-    fh.setLevel(logging.INFO)  # no matter what level I set here
-    formatter = logging.Formatter(format_to_use)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    # print("Now it should log something")
-    logger.debug(printer + " " + file + " " + print_job + " " + ip + " " + username + " " + date + " " + paper_format)
+    my_logger.critical(printer + " " + file + " " + " " + ip + " " + username + " " + date + " " + print_job )
 
-    q = Queue(connection=Redis())
+
+    # q = Queue(connection=Redis())
     # print_job = PrintJob(file, ip, date, printer)
-    job = q.enqueue(handle_print_job, args=[ip, printer, date, username, full_file_path, print_job, paper_format])
-    print("job_queued")
+    # job = q.enqueue(handle_print_job, args=[ip, printer, date, username, full_file_path, print_job, paper_format])
+    # print("job_queued")
 
 
-def get_file_name(file_name):
+def get_file_name(file_name, my_logger: Logger):
     print_job_name = ''
-    with open(file_name, 'rb') as fh:
-        radek = fh.readline().decode('utf-8')
-        slova = radek.split()
-        while slova[1] != 'ENTER':
+    try:
+        with open(file_name, 'rb') as fh:
             radek = fh.readline().decode('utf-8')
             slova = radek.split()
-            if 'JOBNAME' in radek:
-                x = re.search("JOBNAME=.*", radek)
-                name = x.group(0).split('=')[1]
-                print_job_name = name
+            while slova[1] != 'ENTER':
+                radek = fh.readline().decode('utf-8')
+                slova = radek.split()
+                if 'JOBNAME' in radek:
+                    x = re.search("JOBNAME=.*", radek)
+                    name = x.group(0).split('=')[1]
+                    print_job_name = name
+    except Exception as e:
+        print("not good")
+        my_logger.critical(e)
+    except:
+        print("NOt fgood at all")
+    else:
+        print("ok")
     return print_job_name
 
 
@@ -96,3 +93,5 @@ def get_format_from_size(a, b):
         return "A5"
     else:
         return "XXX"
+
+
