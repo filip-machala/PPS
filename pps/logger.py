@@ -1,11 +1,12 @@
 import logging
 from logging import handlers
+from config import PPS
 
 
 class Logger:
     def __init__(self):
-        file = "/var/spool/samba/Test.log"
-        format_to_use = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        file = PPS.DIRECTORY_PATH + PPS.LOG_FILE
+        format_to_use = PPS.LOG_FORMAT
         logging.basicConfig(level=logging.DEBUG)
         my_logger = logging.getLogger("PPS")
         my_logger.propagate = False
