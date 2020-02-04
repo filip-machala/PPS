@@ -20,6 +20,7 @@ def main():
     ip = sys.argv[2]
     printer = sys.argv[3]
     date = sys.argv[4]
+    print(file)
     # current_time = time.strftime("%H:%M:%S", time.localtime())
     username = getuser()
     file_path = '/var/spool/samba/'
@@ -45,6 +46,7 @@ def main():
     q = Queue(connection=Redis())
     # print_job = PrintJob(file, ip, date, printer)
     job = q.enqueue(handle_print_job, args=[ip, printer, date, username, full_file_path, print_job, paper_format])
+    print("job_queued")
 
 
 def get_file_name(file_name):

@@ -1,6 +1,4 @@
-Get ip address
-
-Send to real printer
+Finnish logging to good state, add also logging to errors.
 
 Make good looking front end
 
@@ -10,8 +8,8 @@ Create config
 
 Add some authorization
 
-Finish logging to good state
-
 Manage deleting files after
 
+Get ip address
 
+Send to real printer

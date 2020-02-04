@@ -7,12 +7,34 @@
   </style>
 {% endblock %}
 {% block content %}
-  <h1>PPS</h1>
-  {% for item in logs.items() %}
-        <ul>
-            <li>{{ item }}
-            </li>
-        </ul>
+    <h1>PPS</h1>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Printer</th>
+        <th>Print job name</th>
+        <th>Page format</th>
+        <th>Page count</th>
+        <th>IP address</th>
+        <th>Accept</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for key, job in logs.items() %}
+      <tr>
+        <td>{{ job.date }}</td>
+        <td>{{ job.printer }}</td>
+        <td>{{ job.print_job }}</td>
+        <td>{{ job.page_format }}</td>
+        <td>{{ job.number_of_pages }}</td>
+        <td>{{ job.ip }}</td>
+        <td><button type="button" class="btn btn-outline-success">Success</button></td>
+      </tr>
     {% endfor %}
+    </tbody>
+    </table>
 
 {% endblock %}
+
+<!--{"unigue_job_name": {"date": "3.2.2020", 'printer': 'Test_printer','print_job': "Job that do it all", 'paper_format': 'A4', 'number_of_pages': 12, 'ip': '4.4.4.4'}}})-->
