@@ -1,14 +1,14 @@
 import logging
 from logging import handlers
-from config import PPS
+from .config import PPS
 
 
 class Logger:
-    def __init__(self):
+    def __init__(self, logger_name):
         file = PPS.DIRECTORY_PATH + PPS.LOG_FILE
         format_to_use = PPS.LOG_FORMAT
         logging.basicConfig(level=logging.DEBUG)
-        my_logger = logging.getLogger("PPS")
+        my_logger = logging.getLogger(logger_name)
         my_logger.propagate = False
         fh = logging.handlers.RotatingFileHandler(file)
         fh.setLevel(logging.INFO)  # no matter what level I set here

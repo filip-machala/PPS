@@ -12,13 +12,14 @@ import re
 
 def main():
     FILE = sys.argv[1]
-    file_to_read = "/var/spool/samba/" + FILE
-    cmd = "pkpgcounter"
-    print(file_to_read)
-    p = subprocess.getoutput(cmd + " <" + file_to_read)
-    print(p)
+    # file_to_read = "/var/spool/samba/" + FILE
+    # cmd = "pkpgcounter"
+    # print(file_to_read)
+    # p = subprocess.getoutput(cmd + " <" + file_to_read)
+    # print(p)
+    tmp = "Ou jet"
     file = open("/var/spool/samba/log.txt", "w")
-    # file.write(tmp)
+    file.write(tmp)
     # file.write(stderr)
 
     # print_file = sys.argv[1]
@@ -53,13 +54,6 @@ def main():
     # add the handlers to logger
     logger.addHandler(ch)
     logger.addHandler(fh)
-
-    # 'application' code
-    logger.debug(get_file_name(file_to_read))
-    logger.info('info message')
-    logger.warn('warn message')
-    logger.error('error message')
-    logger.critical('critical message')
 
 #
 # def get_file_name(file_name):

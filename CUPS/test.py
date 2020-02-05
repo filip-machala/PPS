@@ -1,4 +1,4 @@
-import cups
+import
 
 
 def main():

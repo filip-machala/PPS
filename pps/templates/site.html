@@ -13,10 +13,12 @@
       <tr>
         <th>Time</th>
         <th>Printer</th>
+        <th>Job id</th>
         <th>Print job name</th>
         <th>Page format</th>
         <th>Page count</th>
         <th>IP address</th>
+        <th>Status</th>
         <th>Accept</th>
       </tr>
     </thead>
@@ -25,16 +27,35 @@
       <tr>
         <td>{{ job.date }}</td>
         <td>{{ job.printer }}</td>
+        <td class="key">{{ key }}</td>
         <td>{{ job.print_job }}</td>
         <td>{{ job.page_format }}</td>
         <td>{{ job.number_of_pages }}</td>
         <td>{{ job.ip }}</td>
-        <td><button type="button" class="btn btn-outline-success">Success</button></td>
+          <td>{{ job.status }}</td>
+        <td><button class="btn btn-outline-success print-button">Print</button></td>
       </tr>
     {% endfor %}
     </tbody>
     </table>
+<script>
+$(document).ready(function(){
+  $(".print-button").click(function(){
+      // console.log("This works ok");
+    key = this.parentElement.parentElement.children[2].textContent;
+    $.post("print/",
+    {
+      job_id: key,
+    },
+    function(data,status){
+      alert("Data: " + data + "\n Status: " + status);
+    }, 'json').done(function() {alert("OK!")});
+  });
+});
+</script>
 
 {% endblock %}
+
+
 
 <!--{"unigue_job_name": {"date": "3.2.2020", 'printer': 'Test_printer','print_job': "Job that do it all", 'paper_format': 'A4', 'number_of_pages': 12, 'ip': '4.4.4.4'}}})-->

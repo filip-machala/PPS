@@ -12,3 +12,13 @@ class PPS:
     LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     UNKNOWN_PAGE_COUNT = "unknown"
     UNKNOWN_PRINT_JOB_NAME = "unknown Print Job name"
+
+    BLACK_PRINTER = "HP_Print"
+    BLACK_PRINTER_IP = "http://192.168.1.49"
+
+    PRINT_STATUS = {
+        "HELD": "Held",
+        "PRINTING": "Printing",
+        "DONE": "Done"
+    }
+    DRY_RUN = True

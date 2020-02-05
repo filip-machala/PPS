@@ -1,7 +1,11 @@
 import flask
 from flask import Flask
+from .enqueuer import resume_job, is_printer_online
+from .logger import Logger
+from .config import PPS
 # app = Flask(__name__)
 LOG = {}
+my_logger = Logger("Flask")
 
 pps_blueprint = flask.Blueprint('pps', __name__)
 
@@ -19,6 +23,20 @@ def add_new_info():
     return "payload"
 
 
+@pps_blueprint.route('/print/', methods=["POST"])
+def resume_print():
+    if PPS.DRY_RUN:
+        return "Ok"
+    print(flask.request.form["job_id"])
+    job_id = flask.request.form['job_id']
+    if not is_printer_online(my_logger):
+        return "Print failed. Printer is not online."
+    if resume_job(job_id, my_logger):
+        return "Print ok"
+    else:
+        return "Print not ok"
+
+
 @pps_blueprint.route('/', methods=["GET"])
 def index():
     print(LOG)
@@ -29,5 +47,7 @@ def create_app(*args, **kwargs):
     """Create flask app with all configuration set"""
     app = flask.Flask(__name__)
     app.register_blueprint(pps_blueprint)
+    app.jinja_env.auto_reload = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
     return app
 
