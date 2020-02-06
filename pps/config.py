@@ -21,4 +21,4 @@ class PPS:
         "PRINTING": "Printing",
         "DONE": "Done"
     }
-    DRY_RUN = True
+    DRY_RUN = False

@@ -24,7 +24,11 @@
     </thead>
     <tbody>
     {% for key, job in logs.items() %}
-      <tr>
+
+      <tr id = {{ key }},
+        {% if job.status == "Done" %}
+            class="text-success"
+        {% endif %}>
         <td>{{ job.date }}</td>
         <td>{{ job.printer }}</td>
         <td class="key">{{ key }}</td>
@@ -33,7 +37,11 @@
         <td>{{ job.number_of_pages }}</td>
         <td>{{ job.ip }}</td>
           <td>{{ job.status }}</td>
-        <td><button class="btn btn-outline-success print-button">Print</button></td>
+        {% if job.status != "Done" %}
+            <td><button class="btn btn-outline-success print-button">Print</button></td>
+        {% else %}
+            <td><button class="btn btn btn-info hide-button">Hide</button></td>
+        {% endif %}
       </tr>
     {% endfor %}
     </tbody>
@@ -46,10 +54,22 @@ $(document).ready(function(){
     $.post("print/",
     {
       job_id: key,
-    },
-    function(data,status){
-      alert("Data: " + data + "\n Status: " + status);
-    }, 'json').done(function() {alert("OK!")});
+    }).done(function() {
+        // $("tr#"+key)[0].style.backgroundColor="green";
+        window.location.reload();
+    });
+  });
+
+  $(".hide-button").click(function(){
+      // console.log("This works ok");
+    key = this.parentElement.parentElement.children[2].textContent;
+    $.post("hide/",
+    {
+      job_id: key,
+    }).done(function() {
+        // $("tr#"+key)[0].style.backgroundColor="green";
+        window.location.reload();
+    });
   });
 });
 </script>

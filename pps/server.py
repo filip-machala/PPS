@@ -26,15 +26,25 @@ def add_new_info():
 @pps_blueprint.route('/print/', methods=["POST"])
 def resume_print():
     if PPS.DRY_RUN:
-        return "Ok"
-    print(flask.request.form["job_id"])
+        return "Dry run"
     job_id = flask.request.form['job_id']
     if not is_printer_online(my_logger):
         return "Print failed. Printer is not online."
     if resume_job(job_id, my_logger):
+        LOG[job_id]['status'] = PPS.PRINT_STATUS['DONE']
         return "Print ok"
     else:
         return "Print not ok"
+
+
+@pps_blueprint.route('/hide/', methods=["POST"])
+def hide_row():
+    job_id = flask.request.form['job_id']
+    if job_id in LOG:
+        del LOG[job_id]
+        return "Job hidden."
+    else:
+        return "Job not known."
 
 
 @pps_blueprint.route('/', methods=["GET"])
