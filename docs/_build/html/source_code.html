@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Source code &#8212; PPS 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tests" href="test.html" />
+    <link rel="prev" title="PPS - Python Print Server" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="source-code">
+<h1>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h1>
+<p>Source code is split into 3 files.</p>
+<div class="section" id="logger">
+<h2>Logger<a class="headerlink" href="#logger" title="Permalink to this headline">¶</a></h2>
+<p>Logger class definition used in whole class.</p>
+<span class="target" id="module-pps.logger"></span><dl class="class">
+<dt id="pps.logger.Logger">
+<em class="property">class </em><code class="sig-prename descclassname">pps.logger.</code><code class="sig-name descname">Logger</code><a class="headerlink" href="#pps.logger.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pps.logger.Logger.critical">
+<code class="sig-name descname">critical</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.critical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pps.logger.Logger.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pps.logger.Logger.warning">
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="logic">
+<h2>Logic<a class="headerlink" href="#logic" title="Permalink to this headline">¶</a></h2>
+<p>This file defines all operations with printer jobs.</p>
+<span class="target" id="module-pps.logic"></span><dl class="function">
+<dt id="pps.logic.handle_print_job">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">handle_print_job</code><span class="sig-paren">(</span><em class="sig-param">ip</em>, <em class="sig-param">printer</em>, <em class="sig-param">date</em>, <em class="sig-param">username</em>, <em class="sig-param">full_file_path</em>, <em class="sig-param">print_job</em>, <em class="sig-param">paper_format</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logic.handle_print_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle print job</p>
+</dd></dl>
+
+</div>
+<div class="section" id="server">
+<h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<p>This file contains Flask server definition. It handles all actions from user.</p>
+<span class="target" id="module-pps.server"></span><dl class="function">
+<dt id="pps.server.add_new_info">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">add_new_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.add_new_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pps.server.create_app">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">create_app</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create flask app with all configuration set</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.index">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PPS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Source code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#logger">Logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logic">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#server">Server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Tests</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">PPS - Python Print Server</a></li>
+      <li>Next: <a href="test.html" title="next chapter">Tests</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Filip Machala.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/source_code.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
