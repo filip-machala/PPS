@@ -4,15 +4,13 @@ from .logic import resume_job, is_printer_online
 from .logger import Logger
 from .config import PPS_CONFIG
 
-
-# app = Flask(__name__)
-LOG = {}
-my_logger = Logger("Flask")
-
 pps_blueprint = flask.Blueprint('pps', __name__)
 
 
 class Server:
+    """
+    Server class used to store jobs dictionary and logger.
+    """
     def __init__(self):
         self.jobs = {}
         self.my_logger = Logger("PPS_Server")
@@ -34,7 +32,11 @@ class Server:
 
 
 @pps_blueprint.route('/', methods=["POST"])
-def add_new_info():
+def add_new_job():
+    """
+    Add new job to print queue.
+    :return: 200 in case of success, 400 in case job wasn't added.
+    """
     payload = flask.request.get_json()
     if payload and "jobs" in payload:
         for key, value in payload["jobs"].items():
@@ -47,12 +49,16 @@ def add_new_info():
 
 @pps_blueprint.route('/print/', methods=["POST"])
 def resume_print():
+    """
+    Resume held job in print queue.
+    :return: 200 in case of success otherwise 400
+    """
     if PPS_CONFIG.DRY_RUN:
         return "Dry run"
     job_id = flask.request.form['job_id']
-    if not is_printer_online(my_logger):
+    if not is_printer_online(flask.current_app.server.my_logger):
         return "Print failed. Printer is not online.", 200
-    if resume_job(job_id, my_logger):
+    if resume_job(job_id, flask.current_app.server.my_logger):
         flask.current_app.server.set_job_status(job_id, PPS_CONFIG.PRINT_STATUS['DONE'])
         return "Print ok"
     else:
@@ -61,6 +67,10 @@ def resume_print():
 
 @pps_blueprint.route('/hide/', methods=["POST"])
 def hide_row():
+    """
+    Remove job from jobs dict based on job_id.
+    :return: 200 in case of success removal, 400 otherwise.
+    """
     job_id = flask.request.form['job_id']
     if job_id in flask.current_app.server.get_jobs():
         flask.current_app.server.del_job(job_id)
@@ -71,10 +81,18 @@ def hide_row():
 
 @pps_blueprint.route('/', methods=["GET"])
 def index():
+    """
+    Render template with actual jobs.
+    :return: HTML page.
+    """
     return flask.render_template('site.html', logs=flask.current_app.server.get_jobs())
 
 
 def create_app(*args, **kwargs):
+    """
+    Create flask app with predefined values.
+    :return:
+    """
     """Create flask app with all configuration set"""
     app = flask.Flask(__name__)
     app.register_blueprint(pps_blueprint)

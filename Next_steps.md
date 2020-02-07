@@ -10,4 +10,7 @@ Get ip address
 
 Create automatic refreshing of page, if anything changes on server.
 
+Store jobs to file, for persistence.
+
 Add info to client
+
