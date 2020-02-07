@@ -3,4 +3,4 @@ __venv__/
 pps/__pychache__/
 *.pyc
 .chache/
-
+/docs/build/

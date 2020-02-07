@@ -16,7 +16,7 @@ printing = bsd
 and add section
 [filip_printer]
   path = /var/spool/samba
-  print command = /usr/bin/python3 /home/filip/Development/PPS/CUPS/monitor.py "%s" "%I" "%p" "%T"
+  print command = /usr/bin/python3 /home/filip/Development/PPS_CONFIG/CUPS/monitor.py "%s" "%I" "%p" "%T"
   comment = HP Shared printer
   printable = yes
   browsable = yes

@@ -1,3 +1,3 @@
-from enqueuer import main
+from .logic import main
 
 main()
