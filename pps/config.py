@@ -22,4 +22,7 @@ class PPS_CONFIG:
         "PRINTING": "Printing",
         "DONE": "Done"
     }
-    DRY_RUN = False
+
+    USER_DB = "users.db"
+    JOB_DB = "job.db"
+    DRY_RUN = True
