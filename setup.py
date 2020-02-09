@@ -5,7 +5,7 @@ with open('README') as f:
 
 setup(
     name='pps',
-    version='0.1',
+    version='1.0',
     description='Python print server for managing printing from users.',
     long_description=long_description,
     author='Filip Machala',

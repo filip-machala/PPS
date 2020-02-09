@@ -1,9 +1,11 @@
-# PPS - Python Print Server
+PPS - Python Print Server
+=========================
 
 This project contains application with working name Python Print Server. It should provide automation in process in real copy center. 
 It should should create "proxy" between clients computers and printers to provide information about actual print queue to employees. 
 
-## Assignment
+Assignment
+----------
 Create print server written in python with following properties.
 * It can communicate with multiple printers.
 * It can communicate with multiple clients.
@@ -13,12 +15,23 @@ Create print server written in python with following properties.
 * It logs all data, to enable reporting in future.
 
 
-## Installation
+Installation
+------------
 First you need to install python-dev packages
 
+.. code-block::
 
-git clone git@github.com:philips558/PPS_CONFIG.git
-python3.6 -m pip install PPS_CONFIG/
-cd PPS_CONFIG/pkpgcounter-3.50 
-python setup.py install
+    git clone git@github.com:philips558/PPS_CONFIG.git
+    python3.6 -m pip install PPS_CONFIG/
+    cd PPS_CONFIG/pkpgcounter-3.50
+    python setup.py install
 
+
+Building docs
+-------------
+To build documentation for this project run:
+
+.. code-block::
+
+    cd docs
+    make html

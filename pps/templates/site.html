@@ -20,7 +20,8 @@
         <th>Print job name</th>
         <th>Page format</th>
         <th>Page count</th>
-        <th>IP address</th>
+<!--    Ip address bug, should be commented until https://github.com/philips558/PPS/issues/3 resolved.-->
+<!--        <th>IP address</th>-->
         <th>Status</th>
         <th>Accept</th>
       </tr>
@@ -38,7 +39,8 @@
         <td>{{ job.print_job }}</td>
         <td>{{ job.page_format }}</td>
         <td>{{ job.number_of_pages }}</td>
-        <td>{{ job.ip }}</td>
+    <!--    Ip address bug, should be commented until https://github.com/philips558/PPS/issues/3 resolved.-->
+<!--        <td>{{ job.ip }}</td>-->
           <td>{{ job.status }}</td>
         {% if job.status != "Done" %}
             <td><button class="btn btn-outline-success print-button">Print</button></td>

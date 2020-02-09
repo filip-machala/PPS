@@ -16,8 +16,8 @@ class PPS_CONFIG:
 
     BLACK_PRINTER = "HP_Print"
     BLACK_PRINTER_IP = "http://192.168.1.49"
-    COLOR_PRINTER = ""
-    COLOR_PRINTER_IP = "http://"
+    COLOR_PRINTER = "HP_Color_Print"
+    COLOR_PRINTER_IP = "http://192.168.1.50"
 
     PRINT_STATUS = {
         "HELD": "Held",
@@ -27,4 +27,4 @@ class PPS_CONFIG:
 
     USER_DB = "pps.db"
     JOB_DB = "job.db"
-    DRY_RUN = True
+    DRY_RUN = False
