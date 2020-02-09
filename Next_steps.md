@@ -1,12 +1,18 @@
-Finish tests
+##For assignment 
 
 Finish documentation
 
-Add some authorization
+Make package
 
-Add automatic add site reload after anything changes.
+Finish tests
 
-Get ip address
+Create demo with multiple printers and clients
+
+Add color/grayscale
+
+Remove ip address and comment it
+
+##Future improvements
 
 Create automatic refreshing of page, if anything changes on server.
 

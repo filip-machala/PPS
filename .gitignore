@@ -4,3 +4,5 @@ pps/__pychache__/
 *.pyc
 .chache/
 /docs/build/
+*.db
+/.cache/

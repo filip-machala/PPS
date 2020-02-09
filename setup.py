@@ -24,6 +24,6 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Framework :: Flask',
         ],
-    install_requires=['requests', 'Flask', 'wheel'],
+    install_requires=['requests', 'Flask', 'wheel', 'sqlalchemy'],
     python_requires='>=3.6',
 )
