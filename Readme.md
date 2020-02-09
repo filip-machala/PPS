@@ -1,4 +1,4 @@
-# PPS_CONFIG - Python Print Server
+# PPS - Python Print Server
 
 This project contains application with working name Python Print Server. It should provide automation in process in real copy center. 
 It should should create "proxy" between clients computers and printers to provide information about actual print queue to employees. 

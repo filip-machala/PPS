@@ -11,7 +11,7 @@ import requests
 
 def main():
     # TODO check arguments exists
-    my_logger = Logger("PPS_CONFIG")
+    my_logger = Logger("PPS")
     file = sys.argv[1]
     ip = sys.argv[2]
     printer = sys.argv[3]

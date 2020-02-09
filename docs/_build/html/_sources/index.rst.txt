@@ -9,9 +9,11 @@ PPS - Python Print Server
 .. toctree::
    :maxdepth: 4
 
-
+   usage
+   config
    source_code
    test
+
 
 
 About

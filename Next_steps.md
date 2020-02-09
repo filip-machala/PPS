@@ -12,6 +12,8 @@ Add color/grayscale
 
 Remove ip address and comment it
 
+If you start server with export FLASK_APP=pps it doesn't work.
+
 ##Future improvements
 
 Create automatic refreshing of page, if anything changes on server.

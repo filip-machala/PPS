@@ -6,8 +6,6 @@ from .config import PPS_CONFIG
 from .tabledef import *
 from sqlalchemy.orm import sessionmaker
 
-engine_users = create_engine('sqlite:///' + PPS_CONFIG.USER_DB, echo=True)
-# engine_jobs = create_engine('sqlite:///jobs.db', echo=True)
 pps_blueprint = flask.Blueprint('pps', __name__)
 
 
@@ -35,16 +33,26 @@ class Server:
         self.jobs[key] = job
 
 
+def logged_id(session) -> bool:
+    """
+    Check if user is logged_in based on session cookie
+    :param session:
+    :return: bool True if user is logged in, False otherwise.
+    """
+    if not session.get('logged_in'):
+        return False
+    else:
+        return True
+
+
 @pps_blueprint.route('/login/', methods=["GET"])
 def login():
     """
     Render template with actual jobs.
     :return: HTML page.
     """
-    print(session.keys())
     if not session.get('logged_in'):
         return flask.render_template('login.html')
-
     else:
         return flask.render_template('site.html', logs=flask.current_app.server.get_jobs())
 
@@ -55,9 +63,8 @@ def home():
     Render template with actual jobs.
     :return: HTML page.
     """
-    if not session.get('logged_in'):
+    if not logged_id(session):
         return flask.redirect("/login/", code=302)
-
     else:
         return flask.render_template('site.html', logs=flask.current_app.server.get_jobs())
 
@@ -71,7 +78,8 @@ def do_login():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
 
-    Session = sessionmaker(bind=engine_users)
+    engine = create_engine('sqlite:///pps.db', echo=True)
+    Session = sessionmaker(bind=engine)
     s = Session()
     result = s.query(User).filter_by(username=POST_USERNAME, password=POST_PASSWORD).first()
     if result:
@@ -88,8 +96,11 @@ def do_logout():
     Logout currently signed in user.
     :return: redirects to home page
     """
-    session.pop('logged_in', None)
-    return redirect('/')
+    if not logged_id(session):
+        return flask.redirect("/login/", code=302)
+    else:
+        session.pop('logged_in', None)
+        return redirect('/')
 
 
 @pps_blueprint.route('/', methods=["POST"])
@@ -114,17 +125,20 @@ def resume_print():
     Resume held job in print queue.
     :return: 200 in case of success otherwise 400
     """
-    job_id = flask.request.form['job_id']
-    if PPS_CONFIG.DRY_RUN:
-        flask.current_app.server.set_job_status(job_id, PPS_CONFIG.PRINT_STATUS['DONE'])
-        return "Dry run"
-    if not is_printer_online(flask.current_app.server.my_logger):
-        return "Print failed. Printer is not online.", 200
-    if resume_job(job_id, flask.current_app.server.my_logger):
-        flask.current_app.server.set_job_status(job_id, PPS_CONFIG.PRINT_STATUS['DONE'])
-        return "Print ok"
+    if not logged_id(session):
+        return flask.redirect("/login/", code=302)
     else:
-        return "Print not ok"
+        job_id = flask.request.form['job_id']
+        if PPS_CONFIG.DRY_RUN:
+            flask.current_app.server.set_job_status(job_id, PPS_CONFIG.PRINT_STATUS['DONE'])
+            return "Dry run"
+        if not is_printer_online(flask.current_app.server.my_logger):
+            return "Print failed. Printer is not online.", 200
+        if resume_job(job_id, flask.current_app.server.my_logger):
+            flask.current_app.server.set_job_status(job_id, PPS_CONFIG.PRINT_STATUS['DONE'])
+            return "Print ok"
+        else:
+            return "Print not ok"
 
 
 @pps_blueprint.route('/hide/', methods=["POST"])
@@ -133,12 +147,15 @@ def hide_row():
     Remove job from jobs dict based on job_id.
     :return: 200 in case of success removal, 400 otherwise.
     """
-    job_id = flask.request.form['job_id']
-    if job_id in flask.current_app.server.get_jobs():
-        flask.current_app.server.del_job(job_id)
-        return "Job hidden."
+    if not logged_id(session):
+        return flask.redirect("/login/", code=302)
     else:
-        return "Job not known."
+        job_id = flask.request.form['job_id']
+        if job_id in flask.current_app.server.get_jobs():
+            flask.current_app.server.del_job(job_id)
+            return "Job hidden."
+        else:
+            return "Job not known."
 
 
 def create_app(*args, **kwargs):

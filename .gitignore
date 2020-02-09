@@ -6,3 +6,4 @@ pps/__pychache__/
 /docs/build/
 *.db
 /.cache/
+/docs/_build/

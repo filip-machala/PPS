@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tests" href="test.html" />
-    <link rel="prev" title="PPS - Python Print Server" href="index.html" />
+    <link rel="prev" title="Config" href="config.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -40,22 +40,44 @@
 <p>Logger class definition used in whole class.</p>
 <span class="target" id="module-pps.logger"></span><dl class="class">
 <dt id="pps.logger.Logger">
-<em class="property">class </em><code class="sig-prename descclassname">pps.logger.</code><code class="sig-name descname">Logger</code><a class="headerlink" href="#pps.logger.Logger" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pps.logger.</code><code class="sig-name descname">Logger</code><span class="sig-paren">(</span><em class="sig-param">logger_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class used for logging. It uses standard python logging module. All logs are stored to file set in config. Format of
+is also set in config.</p>
 <dl class="method">
 <dt id="pps.logger.Logger.critical">
 <code class="sig-name descname">critical</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.critical" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Log message with critical priority.
+:param message: str message to write to log</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pps.logger.Logger.debug">
+<code class="sig-name descname">debug</code><span class="sig-paren">(</span><em class="sig-param">message: str</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log message with debug priority.
+:param message: str message to write to log</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pps.logger.Logger.error">
 <code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.error" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Log message with error priority.
+:param message: str message to write to log</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pps.logger.Logger.info">
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param">message: str</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log message with info priority.
+:param message: str message to write to log</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pps.logger.Logger.warning">
 <code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logger.Logger.warning" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Log message with warning priority.
+:param message: str message to write to log</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -64,30 +86,218 @@
 <h2>Logic<a class="headerlink" href="#logic" title="Permalink to this headline">¶</a></h2>
 <p>This file defines all operations with printer jobs.</p>
 <span class="target" id="module-pps.logic"></span><dl class="function">
-<dt id="pps.logic.handle_print_job">
-<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">handle_print_job</code><span class="sig-paren">(</span><em class="sig-param">ip</em>, <em class="sig-param">printer</em>, <em class="sig-param">date</em>, <em class="sig-param">username</em>, <em class="sig-param">full_file_path</em>, <em class="sig-param">print_job</em>, <em class="sig-param">paper_format</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logic.handle_print_job" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle print job</p>
+<dt id="pps.logic.add_to_print_queue">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">add_to_print_queue</code><span class="sig-paren">(</span><em class="sig-param">file: str</em>, <em class="sig-param">directory_path: str</em>, <em class="sig-param">printer: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#pps.logic.add_to_print_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add job to print queue and return print job id. If any error occurs return value of UNKNOWN_PRINT_JOB_ID in config.
+:param file: str file name
+:param directory_path: str path to directory of file.
+:param printer: str name of installed printer in CUPS server.
+:param my_logger: Logger class for logging.
+:return: str job id or UNKNOWN_PRINT_JOB_ID in config.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.get_file_format">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">get_file_format</code><span class="sig-paren">(</span><em class="sig-param">directory_path: str</em>, <em class="sig-param">file: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#pps.logic.get_file_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get file format from print file. Firstly create temporary pdf document with ghostpcl, then use pdfinfo and get 
+page count. 
+:param directory_path: str path to directory of file.
+:param file: str file name.
+:param my_logger: Logger class for logging.
+:return: str paper format or value of UNKNOWN_PAPER_FORMAT from config if any error occurs.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.get_format_from_size">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">get_format_from_size</code><span class="sig-paren">(</span><em class="sig-param">a: float</em>, <em class="sig-param">b: float</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#pps.logic.get_format_from_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return file format from size in pixels. Return unknown paper format if nothing is matched.
+:param a: float smaller size of document
+:param b: float bigger size of document
+:return: str file format</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.get_number_of_pages">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">get_number_of_pages</code><span class="sig-paren">(</span><em class="sig-param">full_path_name: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#pps.logic.get_number_of_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of pages. This function uses pkpgcounter bash command to count pages.
+:param full_path_name: str absolute path to file.
+:param my_logger: Logger class for logging.
+:return: str number of pages or value of UNKNOWN_PAGE_COUNT from config.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.get_print_job_id">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">get_print_job_id</code><span class="sig-paren">(</span><em class="sig-param">file_name: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#pps.logic.get_print_job_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get print job id from print queue. This function uses bash lpq.
+:param file_name: str name of file to search for in print queue.
+:param my_logger: Logger class for logging.
+:return: str print job id or value of UNKNOWN_PRINT_JOB_ID from config.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.get_print_job_name">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">get_print_job_name</code><span class="sig-paren">(</span><em class="sig-param">full_path_name: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#pps.logic.get_print_job_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get print job name from file in PCL6 format.
+:param full_path_name: str absolute path to file.
+:param my_logger: Logger class for logging.
+:return: str print job name or value of UNKNOWN_PRINT_JOB_NAME from config.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.handle_enqueue">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">handle_enqueue</code><span class="sig-paren">(</span><em class="sig-param">my_logger: pps.logger.Logger</em>, <em class="sig-param">file: str</em>, <em class="sig-param">ip: str</em>, <em class="sig-param">printer: str</em>, <em class="sig-param">date: str</em>, <em class="sig-param">username: str</em>, <em class="sig-param">directory_path: str</em>, <em class="sig-param">full_file_path: str</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logic.handle_enqueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle enqueue process. Get all info about print job and add it to queue. Then send info to server for acknowledgement.
+:param my_logger: Logger class for logging.
+:param file: str file name
+:param ip: str ip address of client that has sent print job
+:param printer: str name of virtual printer that received print job
+:param date: str datetime of print job
+:param username: str name of user that has sent print job
+:param directory_path: str path to directory of file.
+:param full_file_path: str absolute path to file that should be sent to printer
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.is_printer_online">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">is_printer_online</code><span class="sig-paren">(</span><em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#pps.logic.is_printer_online" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if printer is online. This function simple load printer administration page.
+:param my_logger: Logger class for logging.
+:return: bool True if print is online.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.main">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.logic.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.remove_file">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">remove_file</code><span class="sig-paren">(</span><em class="sig-param">full_file_path: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logic.remove_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete file from disk.
+:param full_file_path: str absolute path to file that should be sent to printer
+:param my_logger: Logger class for logging.
+:return: nothing</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.resume_job">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">resume_job</code><span class="sig-paren">(</span><em class="sig-param">print_job_id: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#pps.logic.resume_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume job that is in print queue. This function uses lp command.
+:param print_job_id: str id of print job to resume
+:param my_logger: Logger class for logging.
+:return: True if lp command return 0.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.logic.send_to_real_printer">
+<code class="sig-prename descclassname">pps.logic.</code><code class="sig-name descname">send_to_real_printer</code><span class="sig-paren">(</span><em class="sig-param">full_file_name: str</em>, <em class="sig-param">printer: str</em>, <em class="sig-param">my_logger: pps.logger.Logger</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.logic.send_to_real_printer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send job to real printer given as argument. This function uses lpr to send job to printer.
+:param full_file_name: str absolute path to file that should be sent to printer
+:param printer: str name of installed printer in CUPS server.
+:param my_logger: Logger class for logging.
+:return: nothing</p>
 </dd></dl>
 
 </div>
 <div class="section" id="server">
 <h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
 <p>This file contains Flask server definition. It handles all actions from user.</p>
-<span class="target" id="module-pps.server"></span><dl class="function">
-<dt id="pps.server.add_new_info">
-<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">add_new_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.add_new_info" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-pps.server"></span><dl class="class">
+<dt id="pps.server.Server">
+<em class="property">class </em><code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">Server</code><a class="headerlink" href="#pps.server.Server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Server class used to store jobs dictionary and logger.</p>
+<dl class="method">
+<dt id="pps.server.Server.add_job">
+<code class="sig-name descname">add_job</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">job</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.Server.add_job" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="pps.server.Server.del_job">
+<code class="sig-name descname">del_job</code><span class="sig-paren">(</span><em class="sig-param">job_id</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.Server.del_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pps.server.Server.get_jobs">
+<code class="sig-name descname">get_jobs</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#pps.server.Server.get_jobs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pps.server.Server.get_logger">
+<code class="sig-name descname">get_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; pps.logger.Logger<a class="headerlink" href="#pps.server.Server.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pps.server.Server.set_job_status">
+<code class="sig-name descname">set_job_status</code><span class="sig-paren">(</span><em class="sig-param">job_id</em>, <em class="sig-param">status</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.Server.set_job_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.add_new_job">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">add_new_job</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.add_new_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new job to print queue.
+:return: 200 in case of success, 400 in case job wasn’t added.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="pps.server.create_app">
 <code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">create_app</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.create_app" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create flask app with all configuration set</p>
+<dd><p>Create flask app with predefined values.
+:return: Flask application</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pps.server.index">
-<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.index" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="pps.server.do_login">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">do_login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.do_login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Login user with values from form as username as password. Then search for user in database.
+:return: Redirects to home page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.do_logout">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">do_logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.do_logout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logout currently signed in user.
+:return: redirects to home page</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.hide_row">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">hide_row</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.hide_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove job from jobs dict based on job_id.
+:return: 200 in case of success removal, 400 otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.home">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render template with actual jobs.
+:return: HTML page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.logged_id">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">logged_id</code><span class="sig-paren">(</span><em class="sig-param">session</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#pps.server.logged_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if user is logged_in based on session cookie
+:param session:
+:return: bool True if user is logged in, False otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.login">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render template with actual jobs.
+:return: HTML page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pps.server.resume_print">
+<code class="sig-prename descclassname">pps.server.</code><code class="sig-name descname">resume_print</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pps.server.resume_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume held job in print queue.
+:return: 200 in case of success otherwise 400</p>
+</dd></dl>
 
 </div>
 </div>
@@ -109,8 +319,9 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Source code</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#logger">Logger</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logic">Logic</a></li>
@@ -124,7 +335,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">PPS - Python Print Server</a></li>
+      <li>Previous: <a href="config.html" title="previous chapter">Config</a></li>
       <li>Next: <a href="test.html" title="next chapter">Tests</a></li>
   </ul></li>
 </ul>
