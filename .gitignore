@@ -6,3 +6,5 @@ pps/__pychache__/
 /docs/_build/
 *.db
 /.cache/
+/.eggs/
+/pps.egg-info/

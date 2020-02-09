@@ -26,4 +26,9 @@ setup(
         ],
     install_requires=['requests', 'Flask', 'wheel', 'sqlalchemy'],
     python_requires='>=3.6',
+    entry_points={
+            'console_scripts': [
+                'pps=pps.logic:main',
+            ],
+        },
 )

@@ -1,9 +1,5 @@
 ##For assignment 
 
-Finish documentation
-
-Make package
-
 Finish tests
 
 Create demo with multiple printers and clients
@@ -13,6 +9,10 @@ Add color/grayscale
 Remove ip address and comment it
 
 If you start server with export FLASK_APP=pps it doesn't work.
+
+Add documentation for tests
+
+Add to Pypi
 
 ##Future improvements
 
