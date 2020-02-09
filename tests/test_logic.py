@@ -49,7 +49,7 @@ def test_get_file_format():
 )
 def test_get_file_format(file, format_to_test):
     path = os.path.dirname(os.path.abspath(__file__)) + "/fixtures/"
-    fake = flexmock(critical=lambda message: None)
+    fake = flexmock(critical=lambda message: None, warning=lambda message: None)
     out = logic.get_file_format(path, file, fake)
     assert out == format_to_test
 
